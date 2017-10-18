@@ -31,10 +31,14 @@ img {
       
   }
 
+div#grace-hopper {
+    border-right: 0px;
+}
+
+
 #input-parent{
       width: 160px;
       margin: 0 auto 0 auto;
-
   }
 
   #player-input {

@@ -1,4 +1,4 @@
-function Game() {
+function Game() { //constructor function, creates a new game
     this.winningNumber = generateWinningNumber();
     this.playersGuess = null;
     this.pastGuesses = [];
@@ -11,19 +11,21 @@ function Game() {
 
 
 
-Game.prototype.playersGuessSubmission = function(num) {
-    this.playersGuess = num;
-    if (num < 1 || num > 100 || isNaN(num)) {
+Game.prototype.playersGuessSubmission = function(num) { //prototype method on "Game", which takes in a num 
+    this.playersGuess = num; //sets "playersGuess" to the input num
+    if (num < 1 || num > 100 || isNaN(num)) { //checks if the num is less than 1 or more than 100, if so, throws error
         throw "That is an invalid guess."
     } else {
-        if (this.checkGuess() === "You Win!") {
+        if (this.checkGuess() === "You Win!") { //uses the output of the checkGuess method to check if the number 
+            //matches the "answer" number, 
             return this.checkGuess();
         }
-        if(this.checkGuess() !== "You Lose." || "You have already guessed that number.") {
-            if (this.pastGuesses.indexOf(this.playersGuess) !== -1) {
+        if(this.checkGuess() !== "You Lose." || "You have already guessed that number.") { //if the output of "checkGuess"
+        //from the instance created by this function is not either "You Lose" or "You have already guessed that number"
+            if (this.pastGuesses.indexOf(this.playersGuess) !== -1) { //check the index of the players guess in past guesses
                 return "You have already guessed that number."
             } else {
-                this.pastGuesses.push(this.playersGuess);
+                this.pastGuesses.push(this.playersGuess); //push the guess into "pastGuesses"
                 return this.checkGuess();
             }   
         }
@@ -32,7 +34,7 @@ Game.prototype.playersGuessSubmission = function(num) {
 }
 
 Game.prototype.checkGuess = function() {
-    var diff = this.difference();
+    var diff = this.difference(); //call the difference method and set the output to a variable "diff"
 
     if (this.pastGuesses.length === 5) {
         return "You Lose."
@@ -58,15 +60,16 @@ Game.prototype.checkGuess = function() {
     }   
 }
 
-Game.prototype.difference = function() {
+Game.prototype.difference = function() { //outputs the absolute value of the difference beween the player's guess
+//and the winning number
     return Math.abs(this.playersGuess - this.winningNumber);
 }
 
-Game.prototype.isLower = function() {
+Game.prototype.isLower = function() { //checks if a guess is lower than the winning number
     return this.playersGuess < this.winningNumber ? true : false;
 }
 
-Game.prototype.provideHint = function() {
+Game.prototype.provideHint = function() { //provides a random array of numbers with the winning number inside
     var hints = [];
     for (var i = 0; i < 2; i++) {
         hints.push(generateWinningNumber());
@@ -76,20 +79,20 @@ Game.prototype.provideHint = function() {
 
 }
 
-function generateWinningNumber() {
+function generateWinningNumber() { //generate winning number
     var num = (Math.floor(Math.random() * 100)) + 1;
 
    return num;
 
 }
 
-function newGame() {
+function newGame() { //creates new game instance
     Game.call(this);
     Object.create(Game.prototype);
     return this;
 }
 
-function shuffle(arr) { 
+function shuffle(arr) { //shuffles items in an array
     var m = arr.length;
 
     while (m > 0) {
